@@ -13,13 +13,13 @@
 
 	<p>Welcome to the Pibox company home page!</p>
 	<hr>
-
+<%--
 	<p>
 		User: <security:authentication property="principal.username" />
 		<br><br>
 		Role(s): <security:authentication property="principal.authorities" />
 	</p>
-
+--%>
 	<form:form action="${pageContext.request.contextPath}/logout" method="POST">
 		<input type="submit" value="Logout">
 	</form:form>
