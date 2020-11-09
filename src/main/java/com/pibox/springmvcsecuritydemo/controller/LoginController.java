@@ -10,7 +10,7 @@ public class LoginController {
     public String login() {
         return "login";
     }
-gfdg
+
     @GetMapping("/access-denied")
     public String accessDenied() {
         return "acsess-denied";
