@@ -13,16 +13,25 @@
 
 	<p>Welcome to the Pibox company home page!</p>
 	<hr>
-<%--
-	<p>
-		User: <security:authentication property="principal.username" />
-		<br><br>
-		Role(s): <security:authentication property="principal.authorities" />
-	</p>
---%>
-	<form:form action="${pageContext.request.contextPath}/logout" method="POST">
-		<input type="submit" value="Logout">
-	</form:form>
+
+	<security:authorize access="isAuthenticated()">
+		<p>
+			User: <security:authentication property="principal.username" />
+			<br><br>
+			Role(s): <security:authentication property="principal.authorities" />
+		</p>
+	</security:authorize>
+	<security:authorize access="hasRole('MANAGER')">
+		<p>
+			<a href="${pageContext.request.contextPath}/leaders">LeaderShip Meeting</a>
+			(Only for Manager peeps)
+		</p>
+	</security:authorize>
+	<security:authorize access="isAuthenticated()">
+		<form:form action="${pageContext.request.contextPath}/logout" method="POST">
+			<input type="submit" value="Logout">
+		</form:form>
+	</security:authorize>
 </body>
 
 </html>

@@ -17,7 +17,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.inMemoryAuthentication()
 				.withUser(users.username("john").password("test123").roles("EMPLOYEE"))
 				.withUser(users.username("mary").password("test123").roles("EMPLOYEE", "MANAGER"))
-				.withUser(users.username("john").password("test123").roles("EMPLOYEE", "ADMIN"));
+				.withUser(users.username("mike").password("test123").roles("EMPLOYEE", "ADMIN"));
 	}
 
 	/*	@Bean
@@ -41,13 +41,15 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/leaders/**").hasRole("MANAGER")
 				.antMatchers("/systems/**").hasRole("ADMIN")
 				.and()
-				.formLogin()
-					.loginPage("/login")
-					.loginProcessingUrl("/authenticateUser")
-					.permitAll()
+					.formLogin()
+						.loginPage("/login")
+						.loginProcessingUrl("/authenticateUser")
+						.permitAll()
 				.and()
-				.logout().permitAll()
-				.logoutSuccessUrl("/")
-				.permitAll();
+					.logout().permitAll()
+						.logoutSuccessUrl("/").permitAll()
+				.and()
+					.exceptionHandling()
+					.accessDeniedPage("/access-denied");
 	}
 }
