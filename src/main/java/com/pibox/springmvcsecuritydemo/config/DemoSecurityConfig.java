@@ -5,12 +5,25 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	private final DataSource securityDataSource;
+
+	public DemoSecurityConfig(DataSource securityDataSource) {
+		this.securityDataSource = securityDataSource;
+	}
+
 	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.jdbcAuthentication().dataSource(securityDataSource);
+	}
+
+	/*	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 		User.UserBuilder users = User.withDefaultPasswordEncoder();
@@ -18,19 +31,6 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 				.withUser(users.username("john").password("test123").roles("EMPLOYEE"))
 				.withUser(users.username("mary").password("test123").roles("EMPLOYEE", "MANAGER"))
 				.withUser(users.username("mike").password("test123").roles("EMPLOYEE", "ADMIN"));
-	}
-
-	/*	@Bean
-	@Override
-	public UserDetailsService userDetailsService() {
-		UserDetails user =
-				User.withDefaultPasswordEncoder()
-						.username("user")
-						.password("password")
-						.roles("USER")
-						.build();
-
-		return new InMemoryUserDetailsManager(user);
 	}*/
 
 	@Override
